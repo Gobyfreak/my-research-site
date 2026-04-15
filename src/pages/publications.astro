@@ -1,0 +1,179 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PublicationCard from '../components/PublicationCard.astro';
+
+const base = import.meta.env.BASE_URL;
+const allPubs = await getCollection('publications');
+const sorted = allPubs.sort((a, b) => b.data.year - a.data.year);
+
+const categories = [
+  { slug: 'peer-reviewed', label: 'Peer-Reviewed' },
+  { slug: 'communications', label: 'Communications' },
+  { slug: 'theses', label: 'Theses' },
+  { slug: 'other', label: 'Other' },
+];
+
+const counts = Object.fromEntries(
+  categories.map(({ slug }) => [slug, sorted.filter((p) => p.data.category === slug).length])
+);
+
+const yearBins = [
+  { label: '2026–2030', min: 2026, max: 2030 },
+  { label: '2021–2025', min: 2021, max: 2025 },
+  { label: '2016–2020', min: 2016, max: 2020 },
+  { label: '2010–2015', min: 2010, max: 2015 },
+];
+const activeBins = yearBins.filter(bin =>
+  sorted.some(p => p.data.year >= bin.min && p.data.year <= bin.max)
+);
+---
+
+<BaseLayout title="Publications" description="All publications by Christos Gkenas.">
+  <section class="max-w-5xl mx-auto px-6 pt-16 pb-24">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+      <div>
+        <h1 class="font-display font-bold text-4xl tracking-tight mb-2" style="color: var(--text);">Publications</h1>
+        <p class="text-sm" style="color: var(--text-muted);">{sorted.length} total</p>
+      </div>
+
+    </div>
+
+    <!-- Search bar -->
+    <div class="relative mb-8">
+      <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4" style="color: var(--text-faint);" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
+      </svg>
+      <input
+        id="pub-search"
+        type="text"
+        placeholder="Search by title, author, or journal…"
+        class="w-full pl-10 pr-4 py-2.5 rounded-lg text-sm font-sans outline-none transition-colors"
+        style="background-color: var(--bg-card); border: 1px solid var(--border); color: var(--text);"
+        autocomplete="off"
+      />
+      <span id="search-count" class="absolute right-3 top-1/2 -translate-y-1/2 text-xs hidden" style="color: var(--text-faint);"></span>
+    </div>
+
+    <!-- Category sub-nav -->
+    <div class="flex flex-wrap gap-2 mb-6 pb-6" style="border-bottom: 1px solid var(--border);">
+      <a
+        href={`${base}publications`}
+        class="px-3 py-1.5 rounded-lg text-sm font-medium text-white"
+        style="background-color: var(--accent);"
+      >
+        All <span class="opacity-70 ml-1">{sorted.length}</span>
+      </a>
+      {categories.map(({ slug, label }) => counts[slug] > 0 && (
+        <a
+          href={`${base}publications/${slug}`}
+          class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+          style="border: 1px solid var(--border); color: var(--text-muted);"
+        >
+          {label} <span class="opacity-60 ml-1">{counts[slug]}</span>
+        </a>
+      ))}
+    </div>
+
+    <!-- Year-range bin filter -->
+    <div class="flex flex-wrap gap-2 mb-8" id="year-filters">
+      <button data-bin="all" class="year-btn px-3 py-1.5 rounded-lg text-sm font-medium text-white" style="background-color: var(--accent);">All years</button>
+      {activeBins.map((bin) => (
+        <button
+          data-bin={`${bin.min}-${bin.max}`}
+          class="year-btn px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+          style="border: 1px solid var(--border); color: var(--text-muted);"
+        >
+          {bin.label}
+        </button>
+      ))}
+    </div>
+
+    <!-- No results message -->
+    <p id="no-results" class="hidden text-sm py-8 text-center" style="color: var(--text-muted);">No publications match your search.</p>
+
+    <!-- Publications list -->
+    <div class="flex flex-col gap-4" id="pub-list">
+      {sorted.map((pub) => (
+        <div data-year={pub.data.year} data-search={`${pub.data.title} ${pub.data.authors} ${pub.data.journal}`.toLowerCase()}>
+          <PublicationCard
+            title={pub.data.title}
+            authors={pub.data.authors}
+            journal={pub.data.journal}
+            year={pub.data.year}
+            doi={pub.data.doi}
+            url={pub.data.url}
+            pdf={pub.data.pdf}
+            abstract={pub.data.abstract}
+            tags={pub.data.tags}
+          />
+        </div>
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const searchInput = document.getElementById('pub-search') as HTMLInputElement;
+  const searchCount = document.getElementById('search-count')!;
+  const noResults = document.getElementById('no-results')!;
+  const yearBtns = document.querySelectorAll<HTMLButtonElement>('.year-btn');
+  const items = document.querySelectorAll<HTMLElement>('#pub-list [data-year]');
+
+  let activeBin = 'all';
+  let searchQuery = '';
+
+  const accentColor = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+
+  function filterItems() {
+    let visible = 0;
+    items.forEach((item) => {
+      const yearOk = activeBin === 'all' || (() => {
+        const [min, max] = activeBin.split('-').map(Number);
+        const y = parseInt(item.dataset.year!);
+        return y >= min && y <= max;
+      })();
+      const searchText = item.dataset.search || '';
+      const searchOk = !searchQuery || searchText.includes(searchQuery);
+      const show = yearOk && searchOk;
+      item.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    noResults.classList.toggle('hidden', visible > 0);
+    if (searchQuery) {
+      searchCount.textContent = `${visible} result${visible !== 1 ? 's' : ''}`;
+      searchCount.classList.remove('hidden');
+    } else {
+      searchCount.classList.add('hidden');
+    }
+  }
+
+  // Year bin buttons
+  yearBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      activeBin = btn.dataset.bin!;
+      yearBtns.forEach((b) => {
+        b.style.cssText = 'border: 1px solid var(--border); color: var(--text-muted); background-color: transparent;';
+      });
+      btn.style.cssText = 'background-color: var(--accent); color: white; border: none;';
+      filterItems();
+    });
+  });
+
+  // Search input
+  searchInput?.addEventListener('input', () => {
+    searchQuery = searchInput.value.toLowerCase().trim();
+    filterItems();
+  });
+
+  // Focus style
+  searchInput?.addEventListener('focus', () => {
+    searchInput.style.borderColor = 'var(--accent)';
+    searchInput.style.boxShadow = '0 0 0 2px var(--accent-bg)';
+  });
+  searchInput?.addEventListener('blur', () => {
+    searchInput.style.borderColor = 'var(--border)';
+    searchInput.style.boxShadow = 'none';
+  });
+</script>

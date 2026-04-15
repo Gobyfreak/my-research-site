@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display: Georgia, 'Times New Roman', Times, serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  /* ISO-INVA teal/green — accent colors kept from iso-inva palette */
+  --color-teal: #009688;
+  --color-teal-dark: #07716e;
+  --color-teal-light: #1cc0b0;
+}
+
+/* ── Light mode — Nietzsche template: clean white/light-grey + ISO-INVA greens ── */
+:root {
+  --bg: #f8f9fa;              /* near-white, cool light grey (Nietzsche light) */
+  --bg-card: #ffffff;         /* pure white cards */
+  --bg-card-hover: #f0faf9;   /* subtle teal tint on hover */
+  --text: #0d1117;            /* near-black (Nietzsche deep text) */
+  --text-muted: rgba(13,17,23,0.55);
+  --text-faint: rgba(13,17,23,0.35);
+  --border: rgba(13,17,23,0.10);
+  --border-strong: rgba(0,150,136,0.30);
+  --accent: #009688;          /* ISO-INVA primary teal (replaces Nietzsche blue) */
+  --accent-dark: #07716e;     /* ISO-INVA dark teal */
+  --accent-light: #1cc0b0;    /* ISO-INVA light teal */
+  --accent-bg: rgba(0,150,136,0.07);
+  --nav-bg: rgba(248,249,250,0.93);
+  --divider: rgba(13,17,23,0.08);
+}
+
+/* ── Dark mode — Nietzsche template: deep near-black (cool) + ISO-INVA greens ── */
+html.dark {
+  --bg: #0d1117;              /* GitHub-dark near-black (Nietzsche dark) */
+  --bg-card: #161b22;         /* slightly lighter dark (Nietzsche card) */
+  --bg-card-hover: #1a2530;   /* teal-shifted hover */
+  --text: #e6edf3;            /* cool off-white (Nietzsche light text) */
+  --text-muted: rgba(230,237,243,0.55);
+  --text-faint: rgba(230,237,243,0.32);
+  --border: rgba(230,237,243,0.08);
+  --border-strong: rgba(28,192,176,0.30);
+  --accent: #1cc0b0;          /* ISO-INVA light teal — pops on dark */
+  --accent-dark: #009688;
+  --accent-light: #4dd9cc;
+  --accent-bg: rgba(28,192,176,0.08);
+  --nav-bg: rgba(13,17,23,0.93);
+  --divider: rgba(230,237,243,0.07);
+}
+
+/* ── Base styles ── */
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 17px;
+  line-height: 1.65;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* ── Typography scale (Nietzsche template sizing) ── */
+h1 { font-size: 2.25rem; line-height: 1.2; font-weight: 700; }
+h2 { font-size: 1.75rem;  line-height: 1.25; font-weight: 700; }
+h3 { font-size: 1.375rem; line-height: 1.3; font-weight: 600; }
+h4 { font-size: 1.05rem;  line-height: 1.4; font-weight: 600; }
+p  { line-height: 1.65; }
+
+/* ── Card component ── */
+.card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+.card:hover {
+  border-color: var(--border-strong);
+  background-color: var(--bg-card-hover);
+}
+
+/* ── Monospace accents ── */
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+/* ── Search highlight ── */
+mark {
+  background-color: var(--accent-bg);
+  color: var(--accent);
+  border-radius: 2px;
+  padding: 0 2px;
+}
+
+/* ── Smooth transitions ── */
+a, button {
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+/* ── Section dividers (Nietzsche style thin lines) ── */
+hr {
+  border: none;
+  border-top: 1px solid var(--divider);
+  margin: 2.5rem 0;
+}

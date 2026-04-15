@@ -1,0 +1,94 @@
+---
+interface Props {
+  title: string;
+  authors: string;
+  journal: string;
+  year: number;
+  doi?: string;
+  url?: string;
+  pdf?: string;
+  abstract?: string;
+  tags?: string[];
+}
+
+const { title, authors, journal, year, doi, url, pdf, abstract, tags = [] } = Astro.props;
+const doiUrl = doi ? (doi.startsWith('http') ? doi : `https://doi.org/${doi}`) : null;
+const linkUrl = doiUrl || url || null;
+const linkLabel = doiUrl ? 'DOI' : url ? 'Link' : null;
+---
+
+<article
+  class="group rounded-md p-5 transition-colors"
+  style="background-color: var(--bg-card); border: 1px solid var(--border);"
+  data-title={title.toLowerCase()}
+  data-authors={authors.toLowerCase()}
+  data-journal={journal.toLowerCase()}
+  onmouseover="this.style.borderColor='var(--border-strong)'; this.style.backgroundColor='var(--bg-card-hover)';"
+  onmouseout="this.style.borderColor='var(--border)'; this.style.backgroundColor='var(--bg-card)';"
+>
+  <div class="flex flex-col gap-2">
+    <h3
+      class="font-display font-semibold leading-snug"
+      style="font-size: 0.975rem; color: var(--text); line-height: 1.4;"
+    >
+      {title}
+    </h3>
+    <p class="text-sm" style="color: var(--text-muted); font-style: italic;">{authors}</p>
+    <p class="text-sm font-medium flex items-center gap-1.5 flex-wrap">
+      <span style="color: var(--accent); font-style: normal;">{journal}</span>
+      <span style="color: var(--text-faint);">·</span>
+      <span class="font-mono text-xs" style="color: var(--text-muted);">{year}</span>
+    </p>
+
+    {abstract && (
+      <details class="mt-1">
+        <summary class="text-xs cursor-pointer transition-colors select-none" style="color: var(--text-muted);">
+          Abstract
+        </summary>
+        <p class="mt-2 text-sm leading-relaxed" style="color: var(--text-muted);">{abstract}</p>
+      </details>
+    )}
+
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-1.5 mt-1">
+        {tags.map((tag) => (
+          <span
+            class="text-xs font-medium"
+            style="padding: 0.15rem 0.5rem; border-radius: 3px; background-color: var(--accent-bg); color: var(--accent);"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <div class="flex gap-2 mt-2">
+      {linkUrl && linkLabel && (
+        <a
+          href={linkUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-semibold transition-colors"
+          style="font-size: 0.72rem; color: var(--accent); border: 1px solid var(--accent); padding: 0.1rem 0.55rem; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.04em;"
+          onmouseover="this.style.backgroundColor='var(--accent)'; this.style.color='white';"
+          onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--accent)';"
+        >
+          {linkLabel}
+        </a>
+      )}
+      {pdf && (
+        <a
+          href={pdf}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="font-semibold transition-colors"
+          style="font-size: 0.72rem; color: var(--text-muted); border: 1px solid var(--border); padding: 0.1rem 0.55rem; border-radius: 3px; text-transform: uppercase; letter-spacing: 0.04em;"
+          onmouseover="this.style.backgroundColor='var(--text)'; this.style.color='var(--bg)';"
+          onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--text-muted)';"
+        >
+          PDF
+        </a>
+      )}
+    </div>
+  </div>
+</article>

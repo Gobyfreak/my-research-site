@@ -1,0 +1,77 @@
+---
+interface Props {
+  title: string;
+  venue: string;
+  location: string;
+  year: number;
+  slides?: string;
+  poster?: string;
+  type?: 'conference' | 'invited' | 'workshop' | 'poster';
+}
+
+const { title, venue, location, year, slides, poster, type = 'conference' } = Astro.props;
+
+const typeLabel: Record<string, string> = {
+  conference: 'Oral Presentation',
+  invited: 'Invited Talk',
+  workshop: 'Workshop',
+  poster: 'Poster',
+};
+---
+
+<div class="relative pl-8 pb-10 last:pb-0" style="border-left: 2px solid var(--border-strong);">
+  <!-- Timeline dot -->
+  <div class="absolute left-[-9px] top-0 w-4 h-4 rounded-full border-2" style="background-color: var(--accent); border-color: var(--bg);"></div>
+
+  <div class="flex flex-col gap-1.5">
+    <div class="flex items-center gap-2 flex-wrap">
+      <span class="font-bold" style="font-size: 0.9rem; color: var(--text-faint);">{year}</span>
+      <span
+        class="text-xs px-2 py-0.5 rounded-full font-medium"
+        style={type === 'invited'
+          ? 'background-color: rgba(245,158,11,0.12); color: #b45309;'
+          : type === 'workshop'
+          ? 'background-color: var(--accent-bg); color: var(--accent-light);'
+          : type === 'poster'
+          ? 'background-color: rgba(139,92,246,0.10); color: #7c3aed;'
+          : 'background-color: var(--accent-bg); color: var(--accent);'}
+      >
+        {typeLabel[type]}
+      </span>
+    </div>
+    <h3 class="font-display font-semibold leading-snug" style="font-size: 1.1rem; color: var(--text);">{title}</h3>
+    <p class="text-sm" style="color: var(--text-muted);">
+      {venue}
+      <span class="mx-1" style="color: var(--text-faint);">·</span>
+      {location}
+    </p>
+    <div class="flex gap-3 mt-1">
+      {slides && (
+        <a
+          href={slides}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-xs font-semibold px-3 py-1 rounded transition-colors"
+          style="color: var(--accent); border: 1px solid var(--accent);"
+          onmouseover="this.style.backgroundColor='var(--accent)'; this.style.color='white';"
+          onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--accent)';"
+        >
+          Slides
+        </a>
+      )}
+      {poster && (
+        <a
+          href={poster}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-xs font-semibold px-3 py-1 rounded transition-colors"
+          style="color: var(--text-muted); border: 1px solid var(--border-strong);"
+          onmouseover="this.style.backgroundColor='var(--text)'; this.style.color='var(--bg)';"
+          onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--text-muted)';"
+        >
+          Poster
+        </a>
+      )}
+    </div>
+  </div>
+</div>

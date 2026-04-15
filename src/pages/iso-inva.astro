@@ -1,0 +1,253 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const team = [
+  {
+    name: 'Christos Gkenas',
+    role: 'Principal Investigator',
+    institution: 'MARE – University of Lisbon',
+    url: 'http://www.mare-centre.pt/pt/user/273',
+  },
+  {
+    name: 'Maria Filomena Magalhães',
+    role: 'Assistant Professor',
+    institution: 'CE3C – University of Lisbon',
+    url: 'http://ce3c.ciencias.ulisboa.pt/member/maria-filomena-magalhatildees',
+  },
+  {
+    name: 'Joana Martelo',
+    role: 'Researcher',
+    institution: 'MARE – University of Lisbon',
+    url: 'http://www.mare-centre.pt/pt/user/8903',
+  },
+  {
+    name: 'Julien Cucherousset',
+    role: 'Researcher',
+    institution: 'Université Paul Sabatier – CNRS, France',
+    url: 'http://juliencucherousset.fr/',
+  },
+  {
+    name: 'Judite Alves',
+    role: 'Researcher',
+    institution: 'CE3C – University of Lisbon',
+    url: 'http://ce3c.ciencias.ulisboa.pt/member/maria-judite-silva-cardoso-alves',
+  },
+  {
+    name: 'João Gago',
+    role: 'Researcher',
+    institution: 'MARE – University of Lisbon',
+    url: 'http://www.mare-centre.pt/pt/user/291',
+  },
+];
+
+const publications = [
+  {
+    title: 'Dietary niche divergence between two invasive fish in Mediterranean streams',
+    authors: 'Gkenas, C.*, Magalhães, M.F.*, Cucherousset, J., Orjuela, R.L. & Ribeiro, F.',
+    journal: 'Knowledge and Management of Aquatic Ecosystems, 420: 24',
+    year: 2019,
+    doi: '10.1051/kmae/2019018',
+  },
+  {
+    title: 'Evaluating the range expansion of recreational non-native fishes in Portuguese freshwaters using scientific and citizen science data',
+    authors: 'Martelo, J., da Costa, L.M., Ribeiro, D., Gago, J., Magalhães, M.F. et al.',
+    journal: 'BioInvasion Records 10: 378–389',
+    year: 2021,
+    doi: '10.3391/bir.2021.10.2.16',
+  },
+  {
+    title: 'Condition and size of the non-native pikeperch Sander lucioperca in Portuguese river basins',
+    authors: 'Gago, J., Neves, A., Gkenas, C., Ribeiro, D. & Ribeiro, F.',
+    journal: 'Ecology and Evolution 11: 5065–5074',
+    year: 2021,
+    doi: '10.1002/ece3.7394',
+  },
+  {
+    title: 'Local environment and fragmentation by drought and damming shape fish beta diversity across pool refuges',
+    authors: 'Martelo, J., Gkenas, C., Ribeiro, D., Alves, M.J., Ribeiro, F. et al.',
+    journal: 'Science of The Total Environment, 930: 172517',
+    year: 2024,
+    doi: '10.1016/j.scitotenv.2024.172517',
+  },
+];
+
+const objectives = [
+  'Quantify food web changes in Mediterranean streams using stable isotope analysis of museum-archived and contemporary fishes',
+  'Examine changes in trophic diversity caused by biological invasions and environmental variability in contemporary fish assemblages',
+  'Identify functional traits of invasive fishes that induce the strongest impacts on trophic structure of recipient assemblages',
+  'Enhance understanding of ecological impacts of invasive fishes through public awareness and outreach',
+];
+---
+
+<BaseLayout title="ISO-INVA Project" description="ISO-INVA: Quantifying food web dynamics in invaded stream communities — a research project led by Christos Gkenas at MARE, University of Lisbon.">
+  <!-- Hero banner -->
+  <section class="bg-[#07716e] text-white">
+    <div class="max-w-5xl mx-auto px-6 py-16">
+      <div class="flex flex-col gap-4 max-w-3xl">
+        <div class="flex items-center gap-3 mb-2">
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/20 text-white/90 tracking-wider uppercase">Completed 2018–2022</span>
+          <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-white/20 text-white/90 tracking-wider uppercase">Principal Investigator</span>
+        </div>
+        <h1 class="font-display font-bold text-4xl md:text-5xl tracking-tight leading-tight">ISO-INVA</h1>
+        <p class="text-xl text-white/80 font-medium leading-relaxed">
+          Quantifying food web dynamics in invaded stream communities
+        </p>
+        <p class="text-white/65 text-sm leading-relaxed max-w-2xl">
+          A FCT-funded research project (PTDC/CTA-AMB/29105/2017 | LISBOA-01-0145-FEDER-029105) investigating
+          the ecological impacts of invasive fishes on Mediterranean freshwater ecosystems through stable
+          isotope analysis, field ecology, and species distribution modelling.
+        </p>
+        <div class="flex flex-wrap gap-3 mt-2">
+          <a
+            href="https://isoinva.section-one.pt"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-white text-[#07716e] text-sm font-semibold hover:bg-white/90 transition-colors"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/>
+            </svg>
+            Official Project Website
+          </a>
+          <a
+            href={`${base}publications`}
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-white/40 text-white text-sm font-semibold hover:bg-white/10 transition-colors"
+          >
+            View Publications →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="max-w-5xl mx-auto px-6 py-16 flex flex-col gap-16">
+
+    <!-- Funding info -->
+    <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      {[
+        { label: 'Funding', value: 'FCT / COMPETE2020' },
+        { label: 'Budget', value: '€236,187' },
+        { label: 'Duration', value: '2018 – 2022' },
+      ].map(({ label, value }) => (
+        <div class="p-5 rounded-xl border border-[#1c1c1c]/10 bg-white text-center">
+          <p class="text-xs text-[#1c1c1c]/40 uppercase tracking-wider mb-1">{label}</p>
+          <p class="font-display font-bold text-lg text-[#009688]">{value}</p>
+        </div>
+      ))}
+    </section>
+
+    <!-- Objectives -->
+    <section>
+      <h2 class="font-display font-bold text-2xl mb-6">Objectives</h2>
+      <div class="flex flex-col gap-3">
+        {objectives.map((obj, i) => (
+          <div class="flex gap-4 p-4 rounded-xl border border-[#1c1c1c]/8 bg-white">
+            <span class="flex-shrink-0 w-7 h-7 rounded-full bg-[#009688] text-white text-xs font-bold flex items-center justify-center">{i + 1}</span>
+            <p class="text-sm text-[#1c1c1c]/75 leading-relaxed pt-0.5">{obj}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section>
+      <h2 class="font-display font-bold text-2xl mb-6">Research Team</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+        {team.map((member) => (
+          <a
+            href={member.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group flex flex-col gap-1.5 p-4 rounded-xl border border-[#1c1c1c]/10 bg-white hover:border-[#009688]/40 hover:shadow-sm transition-all"
+          >
+            <div class="w-8 h-8 rounded-full bg-[#009688]/10 flex items-center justify-center mb-1">
+              <svg class="w-4 h-4 text-[#009688]" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+              </svg>
+            </div>
+            <p class="font-display font-semibold text-sm group-hover:text-[#009688] transition-colors">{member.name}</p>
+            <p class="text-xs text-[#1c1c1c]/50">{member.role}</p>
+            <p class="text-xs text-[#1c1c1c]/40">{member.institution}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <!-- Publications from ISO-INVA -->
+    <section>
+      <h2 class="font-display font-bold text-2xl mb-2">Key Publications</h2>
+      <p class="text-sm text-[#1c1c1c]/50 mb-6">Selected outputs from this project</p>
+      <div class="flex flex-col gap-3">
+        {publications.map((pub) => (
+          <article class="p-5 rounded-xl border border-[#1c1c1c]/10 bg-white hover:border-[#009688]/30 transition-colors">
+            <h3 class="font-display font-semibold text-sm leading-snug mb-1">{pub.title}</h3>
+            <p class="text-xs text-[#1c1c1c]/55 mb-1">{pub.authors}</p>
+            <p class="text-xs text-[#009688] font-medium mb-2">{pub.journal} · {pub.year}</p>
+            {pub.doi && (
+              <a
+                href={`https://doi.org/${pub.doi}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-xs font-semibold text-[#009688] border border-[#009688]/40 px-2.5 py-0.5 rounded hover:bg-[#009688] hover:text-white transition-colors"
+              >
+                DOI
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
+      <div class="mt-4">
+        <a href={`${base}publications`} class="text-sm text-[#009688] hover:underline">View all publications →</a>
+      </div>
+    </section>
+
+    <!-- Outreach -->
+    <section>
+      <h2 class="font-display font-bold text-2xl mb-6">Outreach</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="p-5 rounded-xl border border-[#1c1c1c]/10 bg-white">
+          <p class="font-display font-semibold text-sm mb-2">Online Conference</p>
+          <p class="text-xs text-[#1c1c1c]/60 leading-relaxed">
+            We organised the <strong>ISO-INVA Online Conference on "Impacts of invasive species on food web structure"</strong>
+            (11–13 July 2022, Lisbon). The event brought together international researchers to discuss food web
+            dynamics, invasive species, and stable isotope methods.
+          </p>
+        </div>
+        <div class="p-5 rounded-xl border border-[#1c1c1c]/10 bg-white">
+          <p class="font-display font-semibold text-sm mb-2">Public Materials</p>
+          <p class="text-xs text-[#1c1c1c]/60 leading-relaxed mb-3">
+            Promotional and dissemination materials are available on the project website, including flyers
+            summarising results in English and Portuguese.
+          </p>
+          <div class="flex gap-2">
+            <a
+              href="https://twitter.com/IsoInva"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-xs font-semibold text-[#009688] border border-[#009688]/40 px-2.5 py-1 rounded hover:bg-[#009688] hover:text-white transition-colors"
+            >
+              @IsoInva
+            </a>
+            <a
+              href="https://isoinva.section-one.pt/outreach.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-xs font-semibold text-[#1c1c1c]/50 border border-[#1c1c1c]/20 px-2.5 py-1 rounded hover:bg-[#1c1c1c] hover:text-white transition-colors"
+            >
+              Materials →
+            </a>
+          </div>
+        </div>
+        <div class="p-5 rounded-xl border border-[#009688]/20 bg-[#009688]/5 sm:col-span-2">
+          <p class="font-display font-semibold text-sm mb-1 text-[#07716e]">Funding Partners</p>
+          <p class="text-xs text-[#1c1c1c]/60">
+            Fundação para a Ciência e Tecnologia (FCT) · COMPETE2020 · Programa Operacional Regional de Lisboa ·
+            Faculdade de Ciências, University of Lisbon · MARE · CE3C · Museu Nacional de História Natural e da Ciência
+          </p>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

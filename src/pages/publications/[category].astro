@@ -1,0 +1,140 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PublicationCard from '../../components/PublicationCard.astro';
+
+export async function getStaticPaths() {
+  const categories = ['peer-reviewed', 'theses', 'other'];
+  return categories.map((category) => ({ params: { category } }));
+}
+
+const base = import.meta.env.BASE_URL;
+const { category } = Astro.params;
+
+const labelMap: Record<string, string> = {
+  'peer-reviewed': 'Peer-Reviewed Articles',
+  'theses': 'Theses',
+  'other': 'Other Publications',
+};
+
+const allPubs = await getCollection('publications');
+const filtered = allPubs
+  .filter((p) => p.data.category === category)
+  .sort((a, b) => b.data.year - a.data.year);
+
+const label = labelMap[category] ?? category;
+
+const allCategories = [
+  { slug: 'peer-reviewed', label: 'Peer-Reviewed' },
+  { slug: 'theses', label: 'Theses' },
+  { slug: 'other', label: 'Other' },
+];
+
+// Year-range bins — only show bins with publications in this category
+const yearBins = [
+  { label: '2026–2030', min: 2026, max: 2030 },
+  { label: '2021–2025', min: 2021, max: 2025 },
+  { label: '2016–2020', min: 2016, max: 2020 },
+  { label: '2010–2015', min: 2010, max: 2015 },
+];
+const activeBins = yearBins.filter(bin =>
+  filtered.some(p => p.data.year >= bin.min && p.data.year <= bin.max)
+);
+const showBins = activeBins.length > 1;
+---
+
+<BaseLayout title={label} description={`${label} by Christos Gkenas.`}>
+  <section class="max-w-5xl mx-auto px-6 pt-16 pb-24">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+      <div>
+        <a href={`${base}publications`} class="text-sm hover:underline mb-2 inline-block" style="color: var(--accent);">← All Publications</a>
+        <h1 class="font-display font-bold tracking-tight mb-2" style="font-size: 2.5rem; color: var(--text);">{label}</h1>
+        <p class="text-sm" style="color: var(--text-muted);">{filtered.length} {filtered.length === 1 ? 'item' : 'items'}</p>
+      </div>
+
+    </div>
+
+    <!-- Category sub-nav -->
+    <div class="flex flex-wrap gap-2 mb-8 pb-8" style="border-bottom: 1px solid var(--border);">
+      <a href={`${base}publications`} class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+        style="border: 1px solid var(--border); color: var(--text-muted);"
+        onmouseover="this.style.borderColor='var(--accent)'; this.style.color='var(--accent)';"
+        onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text-muted)';">All</a>
+      {allCategories.map(({ slug, label: catLabel }) => (
+        <a
+          href={`${base}publications/${slug}`}
+          class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+          style={slug === category
+            ? 'background-color: var(--accent); color: white;'
+            : 'border: 1px solid var(--border); color: var(--text-muted);'}
+        >
+          {catLabel}
+        </a>
+      ))}
+    </div>
+
+    {filtered.length === 0 ? (
+      <p class="text-sm" style="color: var(--text-faint);">No items in this category yet.</p>
+    ) : (
+      <>
+        {showBins && (
+          <div class="flex flex-wrap gap-2 mb-8" id="year-filters">
+            <button data-bin="all" class="year-btn px-3 py-1.5 rounded-lg text-sm font-medium text-white transition-colors" style="background-color: var(--accent);">All years</button>
+            {activeBins.map((bin) => (
+              <button
+                data-bin={`${bin.min}-${bin.max}`}
+                class="year-btn px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+                style="border: 1px solid var(--border); color: var(--text-muted);"
+              >
+                {bin.label}
+              </button>
+            ))}
+          </div>
+        )}
+        <div class="flex flex-col gap-4" id="pub-list">
+          {filtered.map((pub) => (
+            <div data-year={pub.data.year}>
+              <PublicationCard
+                title={pub.data.title}
+                authors={pub.data.authors}
+                journal={pub.data.journal}
+                year={pub.data.year}
+                doi={pub.data.doi}
+                url={pub.data.url}
+                pdf={pub.data.pdf}
+                abstract={pub.data.abstract}
+                tags={pub.data.tags}
+              />
+            </div>
+          ))}
+        </div>
+      </>
+    )}
+  </section>
+</BaseLayout>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.year-btn');
+  const items = document.querySelectorAll<HTMLElement>('#pub-list [data-year]');
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const bin = btn.dataset.bin;
+      buttons.forEach((b) => {
+        b.style.cssText = 'border: 1px solid var(--border); color: var(--text-muted); background-color: transparent;';
+      });
+      btn.style.cssText = 'background-color: var(--accent); color: white; border: none;';
+      items.forEach((item) => {
+        if (bin === 'all') {
+          item.style.display = '';
+        } else {
+          const [minStr, maxStr] = bin!.split('-');
+          const min = parseInt(minStr);
+          const max = parseInt(maxStr);
+          const year = parseInt(item.dataset.year!);
+          item.style.display = (year >= min && year <= max) ? '' : 'none';
+        }
+      });
+    });
+  });
+</script>

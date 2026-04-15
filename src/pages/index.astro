@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const interests = [
+  'Aquatic biodiversity',
+  'Biological invasions',
+  'Fish ecology',
+  'Mediterranean streams',
+];
+
+const latestPubs = [
+  {
+    title: 'Dietary Features of Invasive Mozambique Tilapia in the Bhima River, India',
+    authors: 'Khare, T.*, Gkenas, C.*, Verma, C.R., Kharat, S., Kalous, L. & Kumkar, P.',
+    journal: 'National Academy Sciences Letters',
+    year: 2026,
+    doi: '10.1007/s40009-026-02230-7',
+  },
+  {
+    title: 'Integrative taxonomy reveals non-native Squalius hybrids in the Iberian Peninsula',
+    authors: 'Gkenas, C.*, Nogueira, S.*, Curto, M., Dias, D., Ribeiro, D., Rivaes, R., Nogueira, J.G., Lopes-Lima, M., Alves, M.J. & Ribeiro F.',
+    journal: 'Neobiota',
+    year: 2025,
+    doi: '10.3897/neobiota.102.148337',
+  },
+  {
+    title: 'Reproductive traits of the European catfish, Silurus glanis, during the early stages of invasion',
+    authors: 'Gkenas, C., Sequeira, V., Ribeiro, D., Gago, J., Dias, D., Verma, C.R., Kumkar, P. & Ribeiro, F.',
+    journal: 'Journal of Vertebrate Biology',
+    year: 2025,
+    doi: '10.25225/jvb.24122',
+  },
+];
+---
+
+<BaseLayout title="Home" description="Christos Gkenas — Freshwater ecologist and researcher at MARE, University of Lisbon.">
+
+  <!-- Hero — Nietzsche template layout: left text / right circular photo -->
+  <section class="max-w-4xl mx-auto px-6 pt-14 pb-12">
+    <div class="flex flex-col md:flex-row md:items-center gap-10">
+
+      <!-- Left: text content -->
+      <div class="flex-1 min-w-0">
+        <h1 class="font-sans font-bold mb-2" style="font-size: 2.25rem; line-height: 1.2; color: var(--text);">
+          Christos Gkenas
+        </h1>
+        <p class="uppercase tracking-widest mb-0.5" style="font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-sans); letter-spacing: 0.1em;">
+          Junior Researcher in Freshwater Ecology
+        </p>
+        <p class="uppercase tracking-widest mb-5" style="font-size: 0.78rem; color: var(--text-muted); font-family: var(--font-sans); letter-spacing: 0.1em;">
+          MARE · University of Lisbon
+        </p>
+
+        <p class="mb-5" style="font-size: 17px; line-height: 1.65; color: var(--text-muted); font-family: var(--font-sans);">
+          I study how freshwater ecosystems respond to biological invasions, hydrological change, and climate warming, with a focus on Mediterranean river systems where multiple stressors interact under particularly rapid environmental change. My research centres on the ecological consequences of invasive fish, their effects on trophic structure, ecosystem function, and native biodiversity, combining field surveys, dietary analyses, DNA metabarcoding, and statistical modelling.
+        </p>
+
+        <!-- Research interests tags — Nietzsche style: subtle, small -->
+        <div class="flex flex-wrap gap-1.5 mb-7">
+          {interests.map((interest) => (
+            <span
+              class="text-xs font-medium"
+              style="padding: 0.2rem 0.65rem; border-radius: 3px; background-color: var(--accent-bg); color: var(--accent); border: 1px solid var(--border-strong); letter-spacing: 0.01em;"
+            >
+              {interest}
+            </span>
+          ))}
+        </div>
+
+        <!-- Buttons — Nietzsche template style -->
+        <div class="flex flex-wrap gap-3">
+          <a
+            href={`${base}publications`}
+            class="font-semibold text-white transition-colors"
+            style="padding: 0.45rem 1.1rem; border-radius: 4px; background-color: var(--accent); font-size: 0.9rem; font-family: var(--font-sans);"
+            onmouseover="this.style.backgroundColor='var(--accent-dark)';"
+            onmouseout="this.style.backgroundColor='var(--accent)';"
+          >
+            View Publications
+          </a>
+          <a
+            href={`${base}projects`}
+            class="font-semibold transition-colors"
+            style="padding: 0.45rem 1.1rem; border-radius: 4px; border: 1px solid var(--accent); color: var(--accent); font-size: 0.9rem; font-family: var(--font-sans); background-color: transparent;"
+            onmouseover="this.style.backgroundColor='var(--accent-bg)';"
+            onmouseout="this.style.backgroundColor='transparent';"
+          >
+            Current Projects
+          </a>
+        </div>
+      </div>
+
+      <!-- Right: circular photo — Nietzsche template proportion -->
+      <div class="flex-shrink-0 flex justify-center md:justify-end">
+        <div class="rounded-full overflow-hidden"
+          style="width: 260px; height: 260px; border: 4px solid var(--bg-card); box-shadow: 0 0 0 2px var(--border-strong), 0 8px 28px rgba(0,0,0,0.14);">
+          <img
+            src={`${base}profile.jpg`}
+            alt="Christos Gkenas"
+            style="width: 100%; height: 100%; object-fit: cover;"
+          />
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Divider — Nietzsche template uses thin horizontal rules -->
+  <div class="max-w-4xl mx-auto px-6">
+    <hr style="border: none; border-top: 1px solid var(--divider);" />
+  </div>
+
+  <!-- Latest Publications — Nietzsche template: flat list with hairline borders -->
+  <section class="max-w-4xl mx-auto px-6 py-12">
+    <h2 class="font-sans font-bold mb-6" style="font-size: 1.15rem; color: var(--text); letter-spacing: -0.01em;">
+      Latest Publications
+    </h2>
+
+    <div>
+      {latestPubs.map((pub, i) => (
+        <div
+          style={`padding: 1.1rem 0; ${i < latestPubs.length - 1 ? 'border-bottom: 1px solid var(--divider);' : ''}`}
+        >
+          <p class="font-display font-semibold leading-snug mb-1" style="font-size: 1rem; color: var(--text);">
+            {pub.title}
+          </p>
+          <p style="font-size: 0.875rem; color: var(--text-muted); margin: 0.2rem 0; font-style: italic; font-family: var(--font-sans);">
+            {pub.authors}
+          </p>
+          <p style="font-size: 0.875rem; color: var(--text-muted); font-style: italic; font-family: var(--font-sans);">
+            {pub.journal}, {pub.year}
+          </p>
+          {pub.doi && (
+            <a
+              href={`https://doi.org/${pub.doi}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-block mt-2 font-semibold transition-colors"
+              style="font-size: 0.72rem; color: var(--accent); border: 1px solid var(--accent); padding: 0.1rem 0.55rem; border-radius: 3px; font-family: var(--font-sans); letter-spacing: 0.02em; text-transform: uppercase;"
+              onmouseover="this.style.backgroundColor='var(--accent)'; this.style.color='white';"
+              onmouseout="this.style.backgroundColor='transparent'; this.style.color='var(--accent)';"
+            >
+              DOI
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <div style="margin-top: 1.5rem;">
+      <a
+        href={`${base}publications`}
+        class="font-semibold transition-colors"
+        style="font-size: 0.9rem; color: var(--accent); font-family: var(--font-sans);"
+        onmouseover="this.style.textDecoration='underline';"
+        onmouseout="this.style.textDecoration='none';"
+      >
+        View all publications →
+      </a>
+    </div>
+  </section>
+
+</BaseLayout>

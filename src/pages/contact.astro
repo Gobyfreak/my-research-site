@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+---
+
+<BaseLayout title="Contact" description="Contact Christos Gkenas, freshwater ecologist at MARE, University of Lisbon.">
+  <section class="max-w-5xl mx-auto px-6 pt-16 pb-24">
+    <div class="max-w-2xl">
+      <h1 class="font-display font-bold tracking-tight mb-4" style="font-size: 2.5rem; color: var(--text);">Contact</h1>
+      <p class="leading-relaxed mb-12" style="color: var(--text-muted); font-size: 1rem;">
+        I welcome inquiries from prospective students, collaborators, and anyone interested in freshwater
+        ecology or biological invasions research. The best way to reach me is by email.
+      </p>
+
+      <!-- Contact cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+        <!-- Primary email -->
+        <div class="p-5 rounded-xl" style="border: 1px solid var(--border); background-color: var(--bg-card);">
+          <p class="text-xs font-semibold uppercase tracking-wider mb-1.5" style="color: var(--text-faint);">Institutional Email</p>
+          <a href="mailto:cgkenas@ciencias.ulisboa.pt" class="text-sm font-medium hover:underline break-all" style="color: var(--accent);">
+            cgkenas&#64;ciencias.ulisboa.pt
+          </a>
+        </div>
+
+        <!-- Secondary email -->
+        <div class="p-5 rounded-xl" style="border: 1px solid var(--border); background-color: var(--bg-card);">
+          <p class="text-xs font-semibold uppercase tracking-wider mb-1.5" style="color: var(--text-faint);">Personal Email</p>
+          <a href="mailto:chrisgenas@gmail.com" class="text-sm font-medium hover:underline break-all" style="color: var(--accent);">
+            chrisgenas&#64;gmail.com
+          </a>
+        </div>
+
+        <!-- Office -->
+        <div class="p-5 rounded-xl" style="border: 1px solid var(--border); background-color: var(--bg-card);">
+          <p class="text-xs font-semibold uppercase tracking-wider mb-1.5" style="color: var(--text-faint);">Address</p>
+          <p class="text-sm leading-relaxed" style="color: var(--text-muted);">
+            MARE – Marine and Environmental Sciences Centre<br />
+            Faculty of Sciences, University of Lisbon<br />
+            Campo Grande, 1749-016 Lisbon, Portugal<br />
+            <span style="color: var(--text-faint);">Tel: +351 217 500 000 (ext. 28182)</span>
+          </p>
+        </div>
+
+        <!-- Institution -->
+        <div class="p-5 rounded-xl" style="border: 1px solid var(--border); background-color: var(--bg-card);">
+          <p class="text-xs font-semibold uppercase tracking-wider mb-1.5" style="color: var(--text-faint);">Institution</p>
+          <a href="http://www.mare-centre.pt/pt/user/273" target="_blank" rel="noopener noreferrer" class="text-sm font-medium hover:underline" style="color: var(--accent);">
+            MARE Profile
+          </a>
+          <p class="text-xs mt-1" style="color: var(--text-muted);">Marine and Environmental Sciences Centre · University of Lisbon</p>
+          <a href="https://isoinva.section-one.pt" target="_blank" rel="noopener noreferrer" class="text-xs hover:underline mt-1 block" style="color: var(--accent-dark);">
+            ISO-INVA Project Website →
+          </a>
+        </div>
+      </div>
+
+      <!-- IDs -->
+      <div class="mb-10 p-5 rounded-xl" style="border: 1px solid var(--border-strong); background-color: var(--accent-bg);">
+        <p class="text-xs font-semibold uppercase tracking-wider mb-3" style="color: var(--text-faint);">Academic IDs</p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+          <div>
+            <span class="text-xs block" style="color: var(--text-muted);">ORCID</span>
+            <a href="https://orcid.org/0000-0002-9863-2289" target="_blank" rel="noopener noreferrer" class="hover:underline font-medium text-xs" style="color: var(--accent);">0000-0002-9863-2289</a>
+          </div>
+          <div>
+            <span class="text-xs block" style="color: var(--text-muted);">Scopus Author ID</span>
+            <span class="font-medium text-xs" style="color: var(--text);">35368530100</span>
+          </div>
+          <div>
+            <span class="text-xs block" style="color: var(--text-muted);">Web of Science ID</span>
+            <span class="font-medium text-xs" style="color: var(--text);">B-4588-2012</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social profiles -->
+      <div class="pt-8" style="border-top: 1px solid var(--border);">
+        <p class="text-xs font-semibold uppercase tracking-wider mb-4" style="color: var(--text-faint);">Find me online</p>
+        <SocialLinks size="md" />
+        <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm" style="color: var(--text-muted);">
+          <div>
+            <span class="font-medium" style="color: var(--text);">ORCID:</span>
+            <a href="https://orcid.org/0000-0002-9863-2289" target="_blank" rel="noopener noreferrer" class="ml-1 hover:underline" style="color: var(--accent);">0000-0002-9863-2289</a>
+          </div>
+          <div>
+            <span class="font-medium" style="color: var(--text);">Scopus:</span>
+            <a href="https://www.scopus.com/authid/detail.uri?authorId=35368530100" target="_blank" rel="noopener noreferrer" class="ml-1 hover:underline" style="color: var(--accent);">35368530100</a>
+          </div>
+          <div>
+            <span class="font-medium" style="color: var(--text);">Twitter / X:</span>
+            <a href="https://x.com/cgkenas" target="_blank" rel="noopener noreferrer" class="ml-1 hover:underline" style="color: var(--accent);">@cgkenas</a>
+          </div>
+          <div>
+            <span class="font-medium" style="color: var(--text);">ResearchGate:</span>
+            <a href="https://www.researchgate.net/profile/Christos_Gkenas" target="_blank" rel="noopener noreferrer" class="ml-1 hover:underline" style="color: var(--accent);">Christos_Gkenas</a>
+          </div>
+          <div>
+            <span class="font-medium" style="color: var(--text);">LinkedIn:</span>
+            <a href="https://www.linkedin.com/in/christos-gkenas-a5ab7028/" target="_blank" rel="noopener noreferrer" class="ml-1 hover:underline" style="color: var(--accent);">christos-gkenas</a>
+          </div>
+          <div>
+            <span class="font-medium" style="color: var(--text);">Instagram:</span>
+            <a href="https://www.instagram.com/chrisgoby/" target="_blank" rel="noopener noreferrer" class="ml-1 hover:underline" style="color: var(--accent);">@chrisgoby</a>
+          </div>
+          <div>
+            <span class="font-medium" style="color: var(--text);">Facebook:</span>
+            <a href="https://www.facebook.com/epygmaeus/" target="_blank" rel="noopener noreferrer" class="ml-1 hover:underline" style="color: var(--accent);">epygmaeus</a>
+          </div>
+          <div>
+            <span class="font-medium" style="color: var(--text);">CiênciaVitae:</span>
+            <a href="https://www.cienciavitae.pt/en/4815-7480-2410" target="_blank" rel="noopener noreferrer" class="ml-1 hover:underline" style="color: var(--accent);">4815-7480-2410</a>
+          </div>
+          <div>
+            <span class="font-medium" style="color: var(--text);">ISO-INVA Project:</span>
+            <a href="https://isoinva.section-one.pt" target="_blank" rel="noopener noreferrer" class="ml-1 hover:underline" style="color: var(--accent);">isoinva.section-one.pt</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import TalkCard from '../components/TalkCard.astro';
+
+const allTalks = await getCollection('talks');
+
+// Get type filter from URL query param
+const type = Astro.url.searchParams.get('type');
+
+// Filter talks based on type
+let filtered = allTalks;
+let pageTitle = 'Communications';
+let pageDescription = '';
+
+if (type === 'oral') {
+  filtered = allTalks.filter(t => t.data.type === 'conference' || t.data.type === 'invited');
+  pageTitle = 'Oral Talks';
+  pageDescription = 'Oral presentations and invited talks';
+} else if (type === 'poster') {
+  filtered = allTalks.filter(t => t.data.type === 'poster');
+  pageTitle = 'Posters';
+  pageDescription = 'Poster presentations';
+}
+
+const sorted = filtered.sort((a, b) => b.data.year - a.data.year);
+const years = [...new Set(sorted.map((t) => t.data.year))].sort((a, b) => b - a);
+---
+
+<BaseLayout title={pageTitle} description={pageDescription || `Communications and presentations by Christos Gkenas — ${filtered.length} presentations.`}>
+  <section class="max-w-5xl mx-auto px-6 pt-16 pb-24">
+    <!-- Header -->
+    <div class="mb-12">
+      <h1 class="font-display font-bold tracking-tight mb-2" style="font-size: 2.5rem; color: var(--text);">{pageTitle}</h1>
+      <p class="text-sm" style="color: var(--text-muted);">{sorted.length} {type === 'oral' ? 'presentations' : type === 'poster' ? 'posters' : 'communications'}</p>
+    </div>
+
+    <!-- Timeline grouped by year -->
+    <div class="max-w-2xl">
+      {sorted.length > 0 ? (
+        years.map((year) => {
+          const yearTalks = sorted.filter((t) => t.data.year === year);
+          return (
+            <div class="mb-12">
+              <h2 class="font-display font-bold mb-6" style="font-size: 2rem; color: var(--accent);">{year}</h2>
+              <div>
+                {yearTalks.map((talk) => (
+                  <TalkCard
+                    title={talk.data.title}
+                    venue={talk.data.venue}
+                    location={talk.data.location}
+                    year={talk.data.year}
+                    slides={talk.data.slides}
+                    poster={talk.data.poster}
+                    type={talk.data.type}
+                  />
+                ))}
+              </div>
+            </div>
+          );
+        })
+      ) : (
+        <p style="color: var(--text-muted); font-style: italic;">No {pageTitle.toLowerCase()} found.</p>
+      )}
+    </div>
+  </section>
+</BaseLayout>
